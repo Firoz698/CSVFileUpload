@@ -26,6 +26,9 @@ public class HomeController : Controller
         _db = db;
     }
 
+
+
+
     [HttpGet]
     public async Task<IActionResult> Index()
     {
