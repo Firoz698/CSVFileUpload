@@ -1,0 +1,33 @@
+﻿@model CSVUpload.Models.User
+
+@{
+    ViewData["Title"] = "Add New User";
+}
+
+<div class="container py-4">
+    <h2>@ViewData["Title"]</h2>
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" type="email" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">About</label>
+            <input asp-for="About" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Number</label>
+            <input asp-for="Number" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

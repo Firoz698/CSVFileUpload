@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "About CSVUpload";
+}
+
+<div class="container py-4">
+    <h1 class="mb-4">About CSVUpload</h1>
+
+    <p>
+        CSVUpload is a simple ASP.NET Core MVC application that allows users to upload CSV files,
+        preview the data, and store it in a database.
+    </p>
+
+    <p>
+        Features of CSVUpload include:
+    </p>
+
+    <ul>
+        <li>Upload CSV files with columns: Name, Email, Address, About, Number</li>
+        <li>Preview the first 10 rows of the CSV before import</li>
+        <li>Store uploaded users in a database</li>
+        <li>View all uploaded users in a sortable and searchable table</li>
+        <li>Download CSV template for quick start</li>
+        <li>Responsive design using Bootstrap 5</li>
+    </ul>
+
+    <p>
+        This page serves as a demonstration of integrating CSV uploads with ASP.NET Core MVC.
+        You can use this template to build more complex applications with file imports and data management.
+    </p>
+
+    <h3 class="mt-4">Demo Users</h3>
+    <table class="table table-bordered table-striped table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>About</th>
+                <th>Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Rahim Uddin</td>
+                <td>rahim@example.com</td>
+                <td>Dhaka</td>
+                <td>Developer</td>
+                <td>01710000001</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Karim Ahmed</td>
+                <td>karim@example.com</td>
+                <td>Chittagong</td>
+                <td>Designer</td>
+                <td>01710000002</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Sadia Khan</td>
+                <td>sadia@example.com</td>
+                <td>Khulna</td>
+                <td>Manager</td>
+                <td>01710000003</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

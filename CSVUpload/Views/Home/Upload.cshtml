@@ -1,0 +1,119 @@
+﻿@model IEnumerable<CSVUpload.Models.User>
+@{
+    ViewData["Title"] = "Upload CSV";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- TempData Alerts -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+            @if (TempData["Warning"] != null)
+            {
+                <div class="alert alert-warning">@TempData["Warning"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title mb-3">Upload Users CSV</h3>
+                    <p class="text-muted">CSV file format: <code>Name,Email,Address,About,Number</code></p>
+
+                    <form asp-action="Upload" asp-controller="Home" method="post" enctype="multipart/form-data" id="csvUploadForm">
+                        <div class="mb-3">
+                            <label for="csvFile" class="form-label">Choose CSV file</label>
+                            <input class="form-control" type="file" id="csvFile" name="file" accept=".csv" required />
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Upload & Import</button>
+                            <a asp-action="DownloadTemplate" asp-controller="Home" class="btn btn-outline-secondary">Download Template</a>
+                        </div>
+                    </form>
+
+                    <hr />
+
+                    <div id="previewArea" style="display:none;">
+                        <h5>Preview (first 10 rows)</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered" id="previewTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>About</th>
+                                        <th>Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const csvFileInput = document.getElementById('csvFile');
+        const previewArea = document.getElementById('previewArea');
+        const tbody = document.querySelector('#previewTable tbody');
+        const msg = document.getElementById('messageArea');
+
+        csvFileInput.addEventListener('change', function () {
+            const file = csvFileInput.files[0];
+            tbody.innerHTML = '';
+            msg.innerHTML = '';
+
+            if (!file) { previewArea.style.display = 'none'; return; }
+            if (!file.name.toLowerCase().endsWith('.csv')) {
+                msg.innerHTML = '<div class="alert alert-danger">Please select a .csv file.</div>';
+                previewArea.style.display = 'none';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+                const text = ev.target.result;
+                const lines = text.split(/\r\n|\n/).filter(l => l.trim().length > 0);
+                if (lines.length <= 1) {
+                    msg.innerHTML = '<div class="alert alert-warning">CSV file has no data rows.</div>';
+                    previewArea.style.display = 'none';
+                    return;
+                }
+
+                const max = Math.min(10, lines.length - 1);
+                for (let i = 1; i <= max; i++) {
+                    const cols = lines[i].split(',');
+                    const tr = document.createElement('tr');
+                    for (let c = 0; c < 5; c++) {
+                        const td = document.createElement('td');
+                        td.textContent = cols[c] ? cols[c].trim() : '';
+                        tr.appendChild(td);
+                    }
+                    tbody.appendChild(tr);
+                }
+                previewArea.style.display = 'block';
+            };
+            reader.readAsText(file);
+        });
+
+        document.getElementById('csvUploadForm').addEventListener('submit', function () {
+            msg.innerHTML = '<div class="alert alert-info">Uploading and importing... please wait.</div>';
+        });
+    </script>
+}
